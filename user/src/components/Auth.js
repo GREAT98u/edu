@@ -2,9 +2,15 @@ import React, { useState } from "react";
 
 const Auth = () => {
     const [user, setUser] = useState({
-        name: "",
+        first_name: "",
+        last_name: "",
         email: "",
-        password: ""
+        password: "",
+        country: "",
+        state: "",
+        role: "",
+        language: "",
+        class_name: "" // Renamed from 'class' to 'class_name' to avoid keyword conflict
     });
 
     const handleChange = (e) => {
@@ -24,40 +30,44 @@ const Auth = () => {
 
         const data = await response.json();
         alert(data.message);
-        console.log(data)
+        console.log(data);
     };
 
     return (
         <div>
             <h2>User Sign-Up</h2>
             <form onSubmit={handleSubmit}>
-                <input type="first_name" name="first_name" placeholder="Name" onChange={handleChange} required /><br />
-                <input type="last_name" name="last_name" placeholder="last_name" onChange={handleChange} required /><br />
-                <input type="email" name="email" placeholder="email" onChange={handleChange} required /><br />
-                <input type="password" name="password" placeholder="password" onChange={handleChange} required /><br />
-                <input type="country" name="country" placeholder="country" onChange={handleChange} required /><br />
-                <input type="state" name="state" placeholder="state" onChange={handleChange} required /><br />
+                <input type="text" name="first_name" placeholder="First Name" onChange={handleChange} required /><br />
+                <input type="text" name="last_name" placeholder="Last Name" onChange={handleChange} required /><br />
+                <input type="email" name="email" placeholder="Email" onChange={handleChange} required /><br />
+                <input type="password" name="password" placeholder="Password" onChange={handleChange} required /><br />
+                <input type="text" name="country" placeholder="Country" onChange={handleChange} required /><br />
+                <input type="text" name="state" placeholder="State" onChange={handleChange} required /><br />
+
                 <label>Role:</label>
                 <select name="role" onChange={handleChange} required>
-                    <option value="">Select Role</option>  {/* Default placeholder */}
+                    <option value="">Select Role</option>
                     <option value="Student">Student</option>
                     <option value="Teacher">Teacher</option>
-                    <option value="admin">Admin</option>
+                    <option value="Admin">Admin</option>
                 </select><br />
+
                 <label>Language:</label>
-                <select name="Language" onChange={handleChange} required>
-                    <option value="">Select Language</option>  {/* Default placeholder */}
+                <select name="language" onChange={handleChange} required>
+                    <option value="">Select Language</option>
                     <option value="English">English</option>
                     <option value="Hindi">Hindi</option>
                     <option value="Tamil">Tamil</option>
                 </select><br />
+
                 <label>Class:</label>
-                <select name="class" onChange={handleChange} required>
-                    <option value="">Select class</option>  {/* Default placeholder */}
+                <select name="class_name" onChange={handleChange} required>
+                    <option value="">Select Class</option>
                     <option value="7">7</option>
                     <option value="8">8</option>
                     <option value="9">9</option>
                 </select><br />
+
                 <button type="submit">Sign Up</button>
             </form>
         </div>
