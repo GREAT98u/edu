@@ -47,12 +47,36 @@ def create_database():
     conn = get_db_connection(dbname='hackathon')
     print("Now connected to:", query(conn, "SELECT current_database();", fetch=True)[0][0])
     # ✅ Reconnect to 'hackathon' DB and create tables
-    create_tables('script.sql')
+    create_tables()
 
-def create_tables(sql_file):
+def create_tables():
     """Executes SQL script from a file and lists tables after execution."""
-    with open(sql_file, "r") as file:
-        script = file.read().strip().split(";")
+    ddl = """CREATE TABLE IF NOT EXISTS students_info(
+                                       id SERIAL PRIMARY KEY,
+                                       first_name TEXT NOT NULL,
+                                       last_name TEXT NOT NULL,
+                                       email VARCHAR(40) NOT NULL UNIQUE,
+                                       country TEXT NOT NULL,
+                                       state TEXT NOT NULL,
+                                       language TEXT NOT NULL,
+                                       class INT NOT NULL CHECK (class >= 6 AND class <= 12),
+                                       password VARCHAR(40) NOT NULL
+    );
+
+CREATE TABLE IF NOT EXISTS teachers_info(
+                                            id SERIAL PRIMARY KEY,
+                                            first_name TEXT NOT NULL,
+                                            last_name TEXT NOT NULL,
+                                            email VARCHAR(40) NOT NULL UNIQUE,
+                                            country TEXT NOT NULL,
+                                            state TEXT NOT NULL,
+                                            language TEXT NOT NULL,
+                                            class INT NOT NULL CHECK (class >= 6 AND class <= 12),
+                                            password VARCHAR(40) NOT NULL
+    );
+"""
+
+    script = ddl.strip().split(";")
 
     with get_db_connection(autocommit=True,) as conn:
         with conn.cursor() as cur:
@@ -94,13 +118,15 @@ def query(conn, q, fetch=False, data=None):
             cur.execute(q)
 
 def insert_students(student: tuple):
-    ddl = "INSERT INTO students_info (first_name, last_name, country, state, language, class) VALUES (%s, %s,%s, %s, %s, %s,%s); "
+    ddl = "INSERT INTO students_info (first_name, last_name,email,password, country, state, language, class) VALUES (%s, %s,%s, %s, %s, %s,%s); "
     with get_db_connection(autocommit=True,) as conn:
         with conn.cursor() as cur:
             query(conn,ddl, data = student)
-
+# data.get("first_name"), data.get("last_name"), data.get("email"), data.get("password"),
+# data.get("country"), data.get("state"), data.get("role"), data.get("language"),
+# int(data.get("class", 0))  # Ensure "class" is an integer
 def insert_teachers(teacher: tuple):
-    ddl = "INSERT INTO teachers_info (first_name, last_name, country, state, language, class)VALUES (%s, %s,%s, %s, %s, %s,%s); "
+    ddl = "INSERT INTO teachers_info (first_name, last_name,email,password, country, state, language, class) VALUES (%s, %s,%s, %s, %s, %s,%s); "
     with get_db_connection(autocommit=True,) as conn:
         with conn.cursor() as cur:
             query(conn,ddl, data = teacher)
