@@ -16,7 +16,7 @@ def signup():
         result = [
             data.get("first_name"), data.get("last_name"), data.get("email"), data.get("password"),
             data.get("country"), data.get("state"), data.get("language"),
-            int(data.get("class", 0))  # Ensure "class" is an integer
+            int(data.get("class_name", 0))  # Ensure "class" is an integer
         ]
         result = tuple(result)
 
