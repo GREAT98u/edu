@@ -118,7 +118,7 @@ def query(conn, q, fetch=False, data=None):
             cur.execute(q)
 
 def insert_students(student: tuple):
-    ddl = "INSERT INTO students_info (first_name, last_name,email,password, country, state, language, class) VALUES (%s, %s,%s, %s, %s, %s,%s); "
+    ddl = "INSERT INTO students_info (first_name, last_name,email,password, country, state, language, class) VALUES (%s,%s, %s,%s, %s, %s, %s,%s); "
     with get_db_connection(autocommit=True,) as conn:
         with conn.cursor() as cur:
             query(conn,ddl, data = student)
@@ -126,7 +126,7 @@ def insert_students(student: tuple):
 # data.get("country"), data.get("state"), data.get("role"), data.get("language"),
 # int(data.get("class", 0))  # Ensure "class" is an integer
 def insert_teachers(teacher: tuple):
-    ddl = "INSERT INTO teachers_info (first_name, last_name,email,password, country, state, language, class) VALUES (%s, %s,%s, %s, %s, %s,%s); "
+    ddl = "INSERT INTO teachers_info (first_name, last_name,email,password, country, state, language, class) VALUES (%s,%s, %s,%s, %s, %s, %s,%s); "
     with get_db_connection(autocommit=True,) as conn:
         with conn.cursor() as cur:
             query(conn,ddl, data = teacher)
