@@ -12,8 +12,8 @@ CORS(app)  # Enable CORS for frontend-backend communication
 
 @app.route('/signup', methods=['POST'])
 def signup():
-    # data = request.get_json()
-    data = {"first_name" : "Dhruv", "last_name":"Joshi", "email":"au@gmail.com","password":"2edbye3","country":"India","state":"MadhyaPradesh","role":"Student","language":"English", "class":7}
+    data = request.get_json()
+    # data = {"first_name" : "Dhruv", "last_name":"Joshi", "email":"au@gmail.com","password":"2edbye3","country":"India","state":"MadhyaPradesh","role":"Student","language":"English", "class":7}
     # print(data)
     # users.append(data)  # Simulating user storage
     #return jsonify({"message": "User signed up successfully!", "user": data})
