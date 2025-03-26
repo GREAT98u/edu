@@ -133,10 +133,14 @@ def insert_teachers(teacher: tuple):
 
 def check_user_exist(detail):
     # detail = (email, password)
-    ddl = "SELECT id, role FROM users WHERE email = %s AND password = %s;"
+    ddl = "SELECT id, role FROM student_info WHERE email = %s AND password = %s;"
     with get_db_connection(autocommit=True) as conn:
         result = query(conn, ddl, fetch=True, data=detail)
         return result[0] if result else None
+    
+def get_language(email):
+    ddl = "SELECT language FROM student_info WHERE email = %s "
+    with get_db_connection() as conn:
+        result = query(conn,ddl,fetch=True,data=(email,))
+        return result
 
-
-create_database()
