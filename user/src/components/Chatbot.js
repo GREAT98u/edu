@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./../styles/Chatbot.css";
+import LandingPage from "./LandingPage";
 
 const Chatbot = () => {
   const [messages, setMessages] = useState([]);
@@ -33,7 +34,9 @@ const Chatbot = () => {
   };
 
   return (
+    <div><LandingPage/>
     <div className="chatbot-container">
+      
       <h3>AI Chatbot</h3>
       <div className="chatbox">
         {messages.map((msg, index) => (
@@ -51,6 +54,7 @@ const Chatbot = () => {
         />
         <button onClick={sendMessage}>Send</button>
       </div>
+    </div>
     </div>
   );
 };

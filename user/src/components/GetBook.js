@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./../styles/GetBook.css";
+import LandingPage from "./LandingPage";
 
 const GetBook = () => {
   const [subject, setSubject] = useState("");
@@ -36,8 +37,9 @@ const GetBook = () => {
     }
   };
 
-  return (
+  return (<div> <LandingPage/>
     <div className="get-book-container">
+     
       <h2>Find Books</h2>
       <div className="input-container">
         <input
@@ -70,6 +72,7 @@ const GetBook = () => {
           <p>No books found.</p>
         )}
       </div>
+    </div>
     </div>
   );
 };

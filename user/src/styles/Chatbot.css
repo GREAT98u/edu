@@ -1,4 +1,6 @@
 .chatbot-container {
+    justify-content: center;
+    text-align: center;
     margin: 10px;
     width: 80%;
     border: 1px solid #ccc;
@@ -6,6 +8,7 @@
     padding: 10px;
   }
   .chatbox {
+    background-color: aliceblue;
     height: 300px;
     overflow-y: auto;
     margin-bottom: 10px;

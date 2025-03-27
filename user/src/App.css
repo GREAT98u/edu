@@ -1,4 +1,15 @@
+.fog{
+  background: linear-gradient(#d2eaf188,#d2eaf15e),  url('https://www.shutterstock.com/shutterstock/photos/2190640687/display_1500/stock-vector-school-notebook-background-d-flying-yellow-red-and-blue-paper-airplanes-in-the-sky-with-hand-2190640687.jpg') no-repeat center center/cover;
+}
+
 .App {
+  text-align: center;
+}
+
+footer{
+  position: fixed;
+  bottom: 0;
+  left: 43%;
   text-align: center;
 }
 

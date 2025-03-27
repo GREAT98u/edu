@@ -7,6 +7,9 @@ import cohere
 from dotenv import load_dotenv
 import os
 from get_books import scrape_pdfdrive
+from deep_translator import GoogleTranslator
+from generate_quizzz import generate_quiz
+
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend-backend communication
@@ -113,6 +116,78 @@ def get_books():
 
 
     return jsonify({"books": books})
+
+API_KEY = "e440556c59c642a98f680726e1cacc0b"
+NEWS_API_URL = "https://newsapi.org/v2/everything"
+
+@app.route('/trending-topics', methods=['GET'])
+def get_trending_study_topics():
+    user_language = request.args.get("language", "en")  # Get language from request (default: English)
+
+    params = {
+        "q": "(education OR study OR learning OR CBSE OR MPBoard OR ICSE OR Artificial Intelligence OR Machine Learning OR Science OR Exams OR Startups OR India education)",
+        "language": user_language,
+        "sortBy": "publishedAt",
+        "pageSize": 10,
+        "apiKey": API_KEY
+    }
+
+    try:
+        response = requests.get(NEWS_API_URL, params=params)
+        response.raise_for_status()
+        news_data = response.json()
+        articles = news_data.get("articles", [])
+
+        # If no articles found in the requested language, fallback to English
+        if not articles and user_language != "en":
+            params["language"] = "en"
+            response = requests.get(NEWS_API_URL, params=params)
+            response.raise_for_status()
+            news_data = response.json()
+            articles = news_data.get("articles", [])
+
+        if not articles:
+            return jsonify({"message": "No trending study-related topics found."})
+
+        news_list = []
+        for article in articles:
+            title = article["title"]
+            url = article["url"]
+
+            # Translate title if fetched in English but user prefers another language
+            if user_language != "en":
+                title = GoogleTranslator(source="en", target=user_language).translate(title)
+
+            news_list.append({"title": title, "url": url})
+
+        return jsonify({"articles": news_list})
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/quiz", methods=["POST"])
+def gen_quiz():
+    data = request.get_json()
+    print(data)
+    # data = {
+    #     "level": "easy",
+    #     "class_num":7,
+    #     "topic":"maths",
+    #     "language":"English",
+
+    # }
+    # Extract parameters from request data
+    level = data.get("level", "easy")
+    class_num = data.get("class_num", 7)
+    topic = data.get("topic", "maths")
+    language = data.get("language", "english")
+
+    print(level)
+
+    result = generate_quiz(level, class_num, topic, language)
+    print(result)
+    return jsonify(result)
  
 if __name__ == '__main__':
     app.run(debug=True)
+

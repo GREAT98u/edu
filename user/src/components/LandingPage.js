@@ -1,45 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom"; // Import Link
 import "./../styles/LandingPage.css";
-import PersonalizedLearning from "./PersonalizedLearning"; // Import components
-import Chatbot from "./Chatbot";
-import GetBook from "./GetBook";
-
 
 const LandingPage = () => {
-  const [activeComponent, setActiveComponent] = useState(null);
-
-  const renderComponent = () => {
-    switch (activeComponent) {
-      case "PersonalizedLearning":
-        return <PersonalizedLearning />;
-      case "Chatbot":
-        return <Chatbot />;
-      case "GetBooks":
-        return <GetBook />;
-      
-      default:
-        return <h2 className="instruction-text">Select an option from the navbar to get started.</h2>;
-    }
-  };
-
   return (
     <div className="landing-container">
-      {/* Animated Navigation Bar */}
-      <nav className={`navbar ${activeComponent ? "nav-move-left" : ""}`}>
-        <div className="logo">EduAI</div>
-        <ul className="nav-links">
-          <li><button onClick={() => setActiveComponent("PersonalizedLearning")}>🎓 Personalized Learning</button></li>
-          <li><button onClick={() => setActiveComponent("Chatbot")}>🤖 AI Tutor</button></li>
-          <li><button onClick={() => setActiveComponent("GetBooks")}>📚 Get Books</button></li>
-          <li><button onClick={() => setActiveComponent("FindTeacher")}>🧑‍🏫 Find Teacher</button></li>
-        </ul>
-      </nav>
-
-      {/* Animated Content Section */}
-      <div className={`content-area ${activeComponent ? "content-show" : ""}`}>
-        {renderComponent()}
-      </div>
+      <header className="hero">
+        <h1>AI-Powered Learning for Rural India</h1>
+        <p>Learn in your language with AI-driven personalized education.</p>
+        <Link to="/get_trend" className="cta-button">Get Updated!</Link>
+      </header>
+      <section className="features">
+        <Link to="/PersonalizedLearning" className="feature-card">🎓 Personalized Learning</Link>
+        <Link to="/chatbot" className="feature-card">🤖 AI Tutor Support</Link>
+        <Link to="/get_books" className="feature-card">📶Get Books</Link>
+        <Link to="/Quiz" className="feature-card">📶 Quiz</Link>
+        <Link to="/teach" className="feature-card">Teacher Support</Link>
+      </section>
+     
     </div>
   );
 };
