@@ -43,7 +43,7 @@ const QuizGenerator = () => {
       });
   };
 
-  return (<div><LandingPage/>
+  return (<div>
     <div className="quiz-container">
       
       {!quiz ? (

@@ -9,7 +9,7 @@
   }
   .chatbox {
     background-color: aliceblue;
-    height: 300px;
+    height: 400px;
     overflow-y: auto;
     margin-bottom: 10px;
   }

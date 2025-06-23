@@ -1,0 +1,16 @@
+.form-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%; /* Make sure the form takes full width */
+}
+
+.recommend-button {
+  width: 100%; /* Ensure the button takes full width for large screens */
+  margin-top: 15px;
+}
+
+@media (max-width: 576px) {
+  .recommend-button {
+    margin-top: 20px;
+  }
+}

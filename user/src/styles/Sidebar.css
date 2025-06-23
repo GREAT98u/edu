@@ -1,0 +1,25 @@
+.sidebar-toggle-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1051;
+}
+
+.animated-sidebar {
+  transition: transform 0.4s ease-in-out;
+}
+
+.sidebar-menu li {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.sidebar-menu li a {
+  color: #343a40;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.sidebar-menu li a:hover {
+  color: #0d6efd;
+}

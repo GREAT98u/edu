@@ -55,7 +55,7 @@ const teachers = [
 ];
 
 const TeacherSupport = () => {
-  return (<div><LandingPage/>
+  return (<div>
     <div className="teacher-container">
       <h2>📚 Teacher Support</h2>
       <p>Find expert teachers for your learning needs.</p>

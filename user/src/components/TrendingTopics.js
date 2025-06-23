@@ -24,7 +24,7 @@ const TrendingTopics = () => {
       });
   }, []);
 
-  return (<div><LandingPage/>
+  return (<div>
     <div className="trending-container">
       
       <h2>📚 Trending Study Topics</h2>

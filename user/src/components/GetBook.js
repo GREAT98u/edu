@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./../styles/GetBook.css";
-import LandingPage from "./LandingPage";
+import { Container, Form, Button, Card, Row, Col, Alert } from "react-bootstrap";
+import LandingPage from "./LandingPage"; // keep if it's needed
 
 const GetBook = () => {
   const [subject, setSubject] = useState("");
@@ -9,8 +9,8 @@ const GetBook = () => {
   const [error, setError] = useState("");
 
   const fetchBooks = async () => {
-    setError(""); // Clear previous errors
-    setBooks([]); // Clear previous book results
+    setError("");
+    setBooks([]);
 
     if (!subject.trim() || !className.trim() || isNaN(className)) {
       setError("Please enter a valid subject and numeric class.");
@@ -20,9 +20,7 @@ const GetBook = () => {
     try {
       const response = await fetch("http://127.0.0.1:5000/get_books", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ subject, class: parseInt(className) }),
       });
 
@@ -37,43 +35,70 @@ const GetBook = () => {
     }
   };
 
-  return (<div> <LandingPage/>
-    <div className="get-book-container">
-     
-      <h2>Find Books</h2>
-      <div className="input-container">
-        <input
-          type="text"
-          placeholder="Enter Subject (e.g., Mathematics)"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Enter Class (e.g., 10)"
-          value={className}
-          onChange={(e) => setClassName(e.target.value)}
-        />
-        <button onClick={fetchBooks}>Search</button>
-      </div>
+  return (
+    <Container className="py-5">
+      <Row className="justify-content-center">
+        <Col md={8} lg={6}>
+          <Card className="p-4 shadow rounded-4">
+            <h2 className="text-center mb-4 text-primary">Find Books</h2>
 
-      {error && <p className="error-message">{error}</p>}
+            {error && <Alert variant="danger">{error}</Alert>}
 
-      <div className="books-list">
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Subject (e.g., Mathematics)"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Class (e.g., 10)"
+                  value={className}
+                  onChange={(e) => setClassName(e.target.value)}
+                />
+              </Form.Group>
+
+              <div className="d-grid">
+                <Button variant="primary" onClick={fetchBooks}>
+                  Search
+                </Button>
+              </div>
+            </Form>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-center mt-4">
         {books.length > 0 ? (
           books.map((book, index) => (
-            <div key={index} className="book-card">
-              <a href={book.url} target="_blank" rel="noopener noreferrer">
-                {book.title}
-              </a>
-            </div>
+            <Col key={index} md={6} lg={4} className="mb-3">
+              <Card className="h-100 shadow-sm border-0">
+                <Card.Body>
+                  <Card.Title className="text-truncate">{book.title}</Card.Title>
+                  <a
+                    href={book.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline-primary btn-sm mt-2"
+                  >
+                    View Book
+                  </a>
+                </Card.Body>
+              </Card>
+            </Col>
           ))
         ) : (
-          <p>No books found.</p>
+          <Col md={8} className="text-center text-muted mt-3">
+            <p>No books found.</p>
+          </Col>
         )}
-      </div>
-    </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

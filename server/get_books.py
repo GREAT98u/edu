@@ -13,15 +13,22 @@ def scrape_pdfdrive(subject, class_name):
     soup = BeautifulSoup(response.text, "html.parser")
     books = []
 
+    subject_lower = subject.lower()
+    class_lower = f"class {class_name}".lower()
+
     for book in soup.select(".file-right"):
-        title = book.select_one("h2").text.strip()
-        link = "https://www.pdfdrive.com" + book.a["href"]
-        books.append({"title": title, "url": link})
+        title_tag = book.select_one("h2")
+        if not title_tag:
+            continue
+        title = title_tag.text.strip()
+        title_lower = title.lower()
 
-    return books[:5]  # Return top 5 books
+        # Apply strict filtering
+        if subject_lower in title_lower and class_lower in title_lower:
+            link = "https://www.pdfdrive.com" + book.a["href"]
+            books.append({"title": title, "url": link})
 
-# Example Call
+    if not books:
+        return {"message": "No exact matches found. Try modifying the subject/class input."}
 
-
-
-# Example Run
+    return books[:5]  # Return top 5 filtered results
